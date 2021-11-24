@@ -1,5 +1,6 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
+from inventory import Inventory,Hud
 
 app = Ursina()
 
@@ -14,7 +15,7 @@ block_pick = 1
 
 
 def update():
-    global block_pick
+    global block_pick, inventory, invent
 
     if held_keys['left mouse'] or held_keys['right mouse']:
         hand.active()
@@ -79,13 +80,31 @@ class Hand(Entity):
         self.position = Vec2(0.4, -0.6)
 
 
+invent = []
+
+
+def input(key):
+    global invent
+    if key == 'e':
+
+        if len(invent) == 0:
+            invent.append(Inventory())
+        else:
+            destroy(invent[0])
+            invent.pop(0)
+
+
+player = FirstPersonController()
+
 for z in range(20):
     for x in range(20):
         voxel = Voxel(
             position=(x, 0, z)
         )
-
-player = FirstPersonController()
+hud= Hud()
 sky = Sky()
 hand = Hand()
+mouse.visible = False
+window.exit_button.visible = False
+window.fps_counter.enabled = False
 app.run()
