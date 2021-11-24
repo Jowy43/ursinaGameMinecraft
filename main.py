@@ -1,6 +1,6 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
-from inventory import Inventory,Hud
+from inventory import Inventory, Hud, Item
 
 app = Ursina()
 
@@ -15,7 +15,7 @@ block_pick = 1
 
 
 def update():
-    global block_pick, inventory, invent
+    global block_pick, invent
 
     if held_keys['left mouse'] or held_keys['right mouse']:
         hand.active()
@@ -101,7 +101,8 @@ for z in range(20):
         voxel = Voxel(
             position=(x, 0, z)
         )
-hud= Hud()
+hud = Hud()
+item = Item(texture="assets/dirt.jpg")
 sky = Sky()
 hand = Hand()
 mouse.visible = False
